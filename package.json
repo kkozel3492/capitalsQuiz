@@ -1,0 +1,28 @@
+{
+  "name": "capitalsquiz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec ts-node src/index.ts"
+  },
+  "author": "Kevin Koze;",
+  "license": "ISC",
+  "dependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
+    "@types/nodemon": "^1.19.6",
+    "@types/pg": "^8.11.0",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.3",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
