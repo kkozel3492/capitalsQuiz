@@ -4,12 +4,11 @@ import bodyParser from "body-parser";
 import path from "path";
 import pg from "pg";
 
-
-
 dotenv.config({path: '.env.local'})
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
+//Set up DB connection
 const db = new pg.Client({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -18,35 +17,41 @@ const db = new pg.Client({
     port: Number(process.env.DB_PORT),
 });
 
+interface Question {
+    country: string,
+    capital: string,
+}
+
 let quiz = [
     {country: "France", capital: "Paris"},
     {country: "United Kingdom", capital: "London"},
     {country: "United States", capital: "Washington"}
 ];
 
+db.connect()
 db.query("SELECT * FROM capitals", (err,res) => {
     if(err){
         console.error("Error executing query" + err.stack)
     }
     else{
         quiz = res.rows;
+
     }
     db.end();
 })
 
-let question = [
-    {country: "USA",
-    capital: "washington"}
-]
-
-let totalCorrect = 0;
-
+//Middleware
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "public")));
 
-let currentQuestion = {};
+let totalCorrect = 0;
+
+let currentQuestion: Question = {
+    country: '',
+    capital: ''
+};
 
 app.get("/", async (req, res) => {
     totalCorrect = 0;
