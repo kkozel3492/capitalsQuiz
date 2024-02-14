@@ -22,14 +22,12 @@ interface Question {
     capital: string,
 }
 
-let quiz = [
-    {country: "France", capital: "Paris"},
-    {country: "United Kingdom", capital: "London"},
-    {country: "United States", capital: "Washington"}
-];
+
 
 db.connect()
-db.query("SELECT * FROM capitals", (err,res) => {
+
+let quiz: Question[] = [];
+db.query("SELECT country, capital FROM capitals", (err,res) => {
     if(err){
         console.error("Error executing query" + err.stack)
     }
